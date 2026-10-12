@@ -1,0 +1,542 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400&display=swap');
+
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background: #fff;
+    color: #111;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+.nav-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    width: 100%;
+
+    background: #fff;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.nav-bar nav {
+    height: 50px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 30px;
+}
+
+.nav-bar a {
+    font-size: 12px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+
+    transition: 0.3s ease;
+}
+
+.nav-bar a:hover {
+    color: #777;
+}
+
+
+/* =========================
+   POSTER CONTAINER
+========================= */
+
+.poster {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+
+/* =========================
+   POSTER ITEM
+========================= */
+
+.poster-item {
+    width: 100%;
+    height: 520px;
+
+    display: flex;
+
+    overflow: hidden;
+
+    background: #f8f8f8;
+}
+
+
+/* =========================
+   IMAGE
+========================= */
+
+.poster-item img {
+    width: 50%;
+    height: 520px;
+
+    object-fit: cover;
+    object-position: center;
+
+    display: block;
+
+    flex-shrink: 0;
+
+    transition: transform 0.5s ease;
+}
+
+.poster-item:hover img {
+    transform: scale(1.02);
+}
+
+
+/* =========================
+   TEXT
+========================= */
+
+.poster-item p {
+    width: 50%;
+    height: 520px;
+
+    padding: 70px 80px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-family: 'Sora', sans-serif;
+
+    font-size: 17px;
+    line-height: 1.7;
+
+    color: #333;
+
+    background: #fafafa;
+}
+
+
+/* =========================
+   ALTERNATING LAYOUT
+========================= */
+
+/*
+    POSTER 1
+
+    IMAGE | TEXT
+*/
+
+.poster-item:nth-child(1) {
+    flex-direction: row;
+}
+
+
+/*
+    POSTER 2
+
+    TEXT | IMAGE
+*/
+
+.poster-item:nth-child(2) {
+    flex-direction: row-reverse;
+}
+
+
+/*
+    POSTER 3
+
+    IMAGE | TEXT
+*/
+
+.poster-item:nth-child(3) {
+    flex-direction: row;
+}
+
+
+/*
+    POSTER 4
+
+    TEXT | IMAGE
+*/
+
+.poster-item:nth-child(4) {
+    flex-direction: row-reverse;
+}
+
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer {
+    width: 100%;
+
+    background: #fff;
+
+    border-top: 1px solid #e5e5e5;
+
+    margin-top: 0;
+}
+
+.footer footer {
+    max-width: 1200px;
+
+    margin: auto;
+
+    padding: 55px 45px 25px;
+
+    display: grid;
+
+    grid-template-columns:
+        1fr
+        1fr
+        1.5fr
+        auto;
+
+    gap: 50px;
+}
+
+
+/* =========================
+   FOOTER TITLES
+========================= */
+
+.footer h2,
+.footer h3 {
+    font-size: 12px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 15px;
+}
+
+
+/* =========================
+   FOOTER LINKS
+========================= */
+
+.footer-links,
+.footer-column {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 9px;
+}
+
+.footer a {
+    font-size: 13px;
+
+    color: #444;
+
+    transition: 0.3s ease;
+}
+
+.footer a:hover {
+    color: #000;
+}
+
+
+/* =========================
+   NEWSLETTER
+========================= */
+
+.newsletter h2 {
+    font-size: 12px;
+    letter-spacing: 2px;
+}
+
+.newsletter p {
+    max-width: 300px;
+
+    font-size: 13px;
+
+    line-height: 1.5;
+
+    color: #555;
+
+    margin-bottom: 20px;
+}
+
+
+/* =========================
+   EMAIL FORM
+========================= */
+
+.email-form {
+    width: 280px;
+
+    display: flex;
+
+    border-bottom: 1px solid #111;
+}
+
+.email-form input {
+    width: 100%;
+
+    flex: 1;
+
+    border: none;
+    outline: none;
+
+    background: transparent;
+
+    padding: 10px 0;
+
+    font-size: 13px;
+
+    color: #111;
+}
+
+.email-form input::placeholder {
+    color: #999;
+}
+
+.email-form button {
+    border: none;
+
+    background: transparent;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    padding: 0 5px;
+
+    transition: 0.3s ease;
+}
+
+.email-form button:hover {
+    transform: translateX(5px);
+}
+
+
+/* =========================
+   SOCIAL
+========================= */
+
+.social {
+    display: flex;
+
+    align-items: flex-start;
+
+    gap: 12px;
+}
+
+.social a {
+    width: 34px;
+    height: 34px;
+
+    border-radius: 50%;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: #111;
+
+    color: #fff !important;
+
+    font-size: 14px !important;
+    font-weight: bold;
+
+    transition: 0.3s ease;
+}
+
+.social a:hover {
+    transform: translateY(-3px);
+
+    opacity: 0.7;
+}
+
+
+/* =========================
+   COPYRIGHT
+========================= */
+
+.copyright {
+    grid-column: 1 / -1;
+
+    text-align: center;
+
+    border-top: 1px solid #eee;
+
+    padding-top: 25px;
+
+    margin-top: 20px;
+
+    font-size: 11px !important;
+
+    color: #777 !important;
+}
+
+
+/* =========================
+   TABLET
+========================= */
+
+@media (max-width: 1000px) {
+
+    .poster-item {
+        height: 450px;
+    }
+
+    .poster-item img {
+        height: 450px;
+    }
+
+    .poster-item p {
+        height: 450px;
+
+        padding: 50px;
+
+        font-size: 16px;
+    }
+
+    .footer footer {
+        grid-template-columns:
+            1fr
+            1fr;
+
+        gap: 35px;
+    }
+}
+
+
+/* =========================
+   MOBILE
+========================= */
+
+@media (max-width: 700px) {
+
+    .nav-bar nav {
+        height: auto;
+
+        padding: 15px 10px;
+
+        gap: 15px;
+    }
+
+    .nav-bar a {
+        font-size: 10px;
+    }
+
+
+    /*
+        Mobile:
+        Image
+        Text
+        Image
+        Text
+    */
+
+    .poster-item,
+    .poster-item:nth-child(1),
+    .poster-item:nth-child(2),
+    .poster-item:nth-child(3),
+    .poster-item:nth-child(4) {
+
+        flex-direction: column;
+
+        height: auto;
+    }
+
+
+    .poster-item img {
+        width: 100%;
+
+        height: 400px;
+
+        min-height: 0;
+
+        transform: none !important;
+    }
+
+
+    .poster-item p {
+        width: 100%;
+
+        height: auto;
+
+        min-height: 280px;
+
+        padding: 40px 30px;
+
+        font-size: 15px;
+
+        line-height: 1.7;
+    }
+
+
+    .footer footer {
+        grid-template-columns: 1fr;
+
+        padding: 40px 25px 20px;
+
+        gap: 30px;
+    }
+
+
+    .newsletter p {
+        max-width: 100%;
+    }
+
+
+    .email-form {
+        width: 100%;
+    }
+
+
+    .social {
+        margin-top: 5px;
+    }
+
+
+    .copyright {
+        margin-top: 10px;
+    }
+}
+
+
+/* =========================
+   SMALL PHONE
+========================= */
+
+@media (max-width: 450px) {
+
+    .poster-item img {
+        height: 350px;
+    }
+
+    .poster-item p {
+        min-height: 250px;
+
+        padding: 30px 22px;
+
+        font-size: 14px;
+    }
+}

@@ -1,0 +1,217 @@
+/* Profile page (base, nav and footer come from index.css) */
+
+.profile-page {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+}
+
+.profile-page h1 {
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.profile-card {
+    display: flex;
+    gap: 40px;
+    align-items: flex-start;
+    background: #f7f7f7;
+    padding: 40px;
+}
+
+/* PHOTO */
+.avatar-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+}
+
+.avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    background-color: #111;
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    font-size: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.photo-btn {
+    padding: 6px 14px;
+    border: 1px solid #111;
+    border-radius: 14px;
+    background: #fff;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.photo-btn:hover {
+    background: #111;
+    color: #fff;
+}
+
+/* FORM */
+.profile-form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.profile-form label {
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.profile-form input,
+.profile-form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #111;
+    background: #fff;
+    font: inherit;
+}
+
+.profile-form textarea {
+    resize: vertical;
+}
+
+.profile-form button[type="submit"] {
+    margin-top: 20px;
+    padding: 12px;
+    border: 1px solid #111;
+    background: #111;
+    color: #fff;
+    font: inherit;
+    cursor: pointer;
+}
+
+.profile-form button[type="submit"]:hover {
+    background: #fff;
+    color: #111;
+}
+
+.message {
+    min-height: 1.2em;
+    font-size: 14px;
+    color: #1a7f37;
+}
+
+.message.error {
+    color: #c62828;
+}
+
+/* PHONE */
+@media (max-width: 700px) {
+    .profile-card {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 24px;
+    }
+
+    .avatar-box {
+        align-self: center;
+    }
+}
+
+/* LOGIN / CREATE ACCOUNT */
+.auth-box {
+    max-width: 420px;
+    margin: 0 auto;
+    background: #f7f7f7;
+    padding: 32px;
+}
+
+.auth-note {
+    text-align: center;
+    margin-bottom: 24px;
+    color: #555;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #ccc;
+}
+
+.tab {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    font: inherit;
+    color: #888;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+}
+
+.tab.active {
+    color: #111;
+    border-bottom-color: #111;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.auth-form[hidden] {
+    display: none;
+}
+
+.auth-form label {
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.auth-form input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #111;
+    background: #fff;
+    font: inherit;
+}
+
+.primary {
+    margin-top: 20px;
+    padding: 12px;
+    border: 1px solid #111;
+    background: #111;
+    color: #fff;
+    font: inherit;
+    cursor: pointer;
+}
+
+.primary:hover {
+    background: #fff;
+    color: #111;
+}
+
+.logout {
+    display: block;
+    margin: 24px auto 0;
+    padding: 8px 20px;
+    border: 1px solid #111;
+    background: #fff;
+    font: inherit;
+    cursor: pointer;
+}
+
+.logout:hover {
+    background: #111;
+    color: #fff;
+}
+
+#email[readonly] {
+    background: #eee;
+    color: #666;
+}

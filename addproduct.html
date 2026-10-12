@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Product</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="shop.css">
+</head>
+
+<body>
+
+    <div class="nav-bar">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="createaccount.html">Create Account</a>
+        </nav>
+    </div>
+
+    <main class="page narrow">
+        <h1>Add New Product</h1>
+
+        <form id="productForm" class="product-form">
+            <label for="name">Product name</label>
+            <input type="text" id="name" required>
+
+            <label for="price">Price ($)</label>
+            <input type="number" id="price" min="0" step="0.01" required>
+
+            <label for="description">Description</label>
+            <textarea id="description" rows="4"></textarea>
+
+            <label for="image">Photo</label>
+            <input type="file" id="image" accept="image/*" required>
+            <img id="preview" class="preview" alt="Preview" hidden>
+
+            <button type="submit">Add Product</button>
+            <p id="message" class="message" role="status"></p>
+        </form>
+
+        <h2>Your products</h2>
+        <div id="productList" class="product-list"></div>
+    </main>
+
+    <div class="footer">
+        <footer>
+            <div class="footer-links">
+                <h3>LINKS</h3>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+                <a href="profile.html">Profile</a>
+            </div>
+
+            <div class="footer-column">
+                <h3>POLICIES</h3>
+                <a href="#">Terms</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Shipping &amp; Delivery</a>
+                <a href="#">Returns &amp; Exchange</a>
+                <a href="#">Cancellation</a>
+            </div>
+
+            <div class="newsletter">
+                <h2>BE A PART OF ELEVN</h2>
+                <p>
+                    Subscribe to get early access to our drops
+                    and exclusive offers such as future
+                    archive sales only for subscribers.
+                </p>
+                <form class="email-form" action="#" method="post">
+                    <input type="email" name="email" placeholder="Enter your email" aria-label="Email address" required>
+                    <button type="submit" aria-label="Subscribe">→</button>
+                </form>
+            </div>
+
+            <a href="https://web.facebook.com/virak.ean.3" class="facebook" aria-label="Facebook"
+                target="_blank" rel="noopener">f</a>
+
+            <p class="copyright">&copy; 2026 Your Company. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="products.js"></script>
+    <script>
+        const form = document.getElementById("productForm");
+        const fileInput = document.getElementById("image");
+        const preview = document.getElementById("preview");
+        const message = document.getElementById("message");
+        const list = document.getElementById("productList");
+
+        let imageData = "";
+
+        // Shrink the photo so it fits in browser storage
+        function resizeImage(file, maxSize, callback) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                const img = new Image();
+                img.onload = function () {
+                    const scale = Math.min(1, maxSize / Math.max(img.width, img.height));
+                    const canvas = document.createElement("canvas");
+                    canvas.width = Math.round(img.width * scale);
+                    canvas.height = Math.round(img.height * scale);
+                    canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+                    callback(canvas.toDataURL("image/jpeg", 0.8));
+                };
+                img.src = reader.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        fileInput.addEventListener("change", function () {
+            const file = fileInput.files[0];
+            if (!file) return;
+            resizeImage(file, 800, function (data) {
+                imageData = data;
+                preview.src = data;
+                preview.hidden = false;
+            });
+        });
+
+        function showMessage(text, isError) {
+            message.textContent = text;
+            message.className = "message" + (isError ? " error" : "");
+        }
+
+        function renderList() {
+            list.innerHTML = "";
+            const products = getProducts();
+
+            if (products.length === 0) {
+                const none = document.createElement("p");
+                none.className = "empty";
+                none.textContent = "No products yet.";
+                list.append(none);
+                return;
+            }
+
+            products.forEach(function (p) {
+                const row = document.createElement("div");
+                row.className = "product-row";
+
+                const img = document.createElement("img");
+                img.src = p.image;
+                img.alt = p.name;
+
+                const info = document.createElement("span");
+                info.textContent = p.name + " - " + formatPrice(p.price);
+
+                const del = document.createElement("button");
+                del.type = "button";
+                del.className = "delete";
+                del.textContent = "Delete";
+                del.addEventListener("click", function () {
+                    if (!confirm("Delete " + p.name + "?")) return;
+                    saveProducts(getProducts().filter(function (x) { return x.id !== p.id; }));
+                    renderList();
+                });
+
+                row.append(img, info, del);
+                list.append(row);
+            });
+        }
+
+        form.addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            if (!imageData) {
+                showMessage("Please choose a photo.", true);
+                return;
+            }
+
+            const products = getProducts();
+            products.push({
+                id: Date.now(),
+                name: document.getElementById("name").value.trim(),
+                price: parseFloat(document.getElementById("price").value),
+                description: document.getElementById("description").value.trim(),
+                image: imageData
+            });
+
+            try {
+                saveProducts(products);
+            } catch (err) {
+                showMessage("Storage is full. Delete a product or use a smaller photo.", true);
+                return;
+            }
+
+            form.reset();
+            imageData = "";
+            preview.hidden = true;
+            showMessage("Product added. It now shows in the shop.", false);
+            renderList();
+        });
+
+        renderList();
+    </script>
+</body>
+
+</html>

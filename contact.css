@@ -1,0 +1,199 @@
+/* Contact page (base, nav and footer come from index.css) */
+
+:root {
+    --ink: #1a1a1a;
+    --placeholder: #8c8c8c;
+}
+
+.contact-page {
+    background: #f7f7f7;
+    padding: 80px 24px 100px;
+}
+
+.contact-page section {
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.contact-page h1 {
+    font-size: 2.4rem;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    line-height: 1.1;
+}
+
+/* short black line under the title */
+.contact-page h1::after {
+    content: "";
+    display: block;
+    width: 56px;
+    height: 2px;
+    margin: 18px auto 0;
+    background: var(--ink);
+}
+
+.contact-page section > p {
+    margin: 28px auto 44px;
+    font-family: 'Sora', sans-serif;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: #333;
+}
+
+/* Labels stay for screen readers; the placeholders do the visible work */
+.contact-form label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    margin: -1px;
+    padding: 0;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* Left column: name, phone, email. Right column: message. */
+.contact-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: repeat(3, 42px) auto auto;
+    column-gap: 40px;
+    row-gap: 26px;
+    text-align: left;
+}
+
+.contact-form input,
+.contact-form textarea {
+    width: 100%;
+    border: 1px solid var(--ink);
+    background: #fff;
+    color: var(--ink);
+    font-family: 'Sora', sans-serif;
+    font-size: 0.95rem;
+}
+
+.contact-form input {
+    grid-column: 1;
+    padding: 0 18px;
+    border-radius: 21px;
+}
+
+.contact-form #name  { grid-row: 1; }
+.contact-form #phone { grid-row: 2; }
+.contact-form #email { grid-row: 3; }
+
+.contact-form textarea {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    padding: 12px 18px;
+    border-radius: 21px;
+    resize: none;
+}
+
+.contact-form ::placeholder {
+    color: var(--placeholder);
+    opacity: 1;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(26, 26, 26, 0.15);
+}
+
+/* Send button: black, like the other buttons on the site */
+.contact-form button {
+    grid-column: 1 / -1;
+    grid-row: 4;
+    justify-self: center;
+    width: 150px;
+    height: 42px;
+    margin-top: 6px;
+    border: 1px solid var(--ink);
+    border-radius: 21px;
+    background: var(--ink);
+    color: #fff;
+    font: inherit;
+    font-size: 1rem;
+    letter-spacing: 0.08em;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s;
+}
+
+.contact-form button:hover {
+    background: #fff;
+    color: var(--ink);
+}
+
+.contact-form button:focus-visible,
+.contact-info a:focus-visible {
+    outline: 3px solid rgba(26, 26, 26, 0.35);
+    outline-offset: 3px;
+}
+
+.contact-info {
+    grid-column: 1 / -1;
+    grid-row: 5;
+    margin: -8px 0 0;
+    text-align: center;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.contact-info a {
+    color: var(--ink);
+    text-decoration: underline;
+    text-underline-offset: 4px;
+}
+
+/* Stack on tablets and phones */
+@media (max-width: 760px) {
+    .contact-page {
+        padding: 56px 20px 70px;
+    }
+
+    .contact-page h1 {
+        font-size: 1.8rem;
+    }
+
+    .contact-page section > p {
+        font-size: 0.95rem;
+        margin-bottom: 30px;
+    }
+
+    .contact-form {
+        grid-template-columns: 1fr;
+        grid-template-rows: none;
+        row-gap: 16px;
+    }
+
+    .contact-form #name,
+    .contact-form #phone,
+    .contact-form #email,
+    .contact-form textarea,
+    .contact-form button,
+    .contact-info {
+        grid-column: 1;
+        grid-row: auto;
+    }
+
+    .contact-form input {
+        height: 42px;
+    }
+
+    .contact-form textarea {
+        height: 160px;
+    }
+
+    .contact-info {
+        margin-top: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+    }
+}

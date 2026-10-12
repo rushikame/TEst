@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="profile.css">
+</head>
+
+<body>
+
+    <div class="nav-bar">
+        <nav>
+            <a href="index.html">Home</a>
+            <a href="shop.html">Shop</a>
+            <a href="about.html">About</a>
+            <a href="contact.html">Contact</a>
+            <a href="createaccount.html">Create Account</a>
+        </nav>
+    </div>
+
+    <main class="profile-page">
+        <h1 id="pageTitle">My Profile</h1>
+
+        <!-- SHOWN WHEN NOT LOGGED IN -->
+        <div class="auth-box" id="authBox" hidden>
+            <p class="auth-note">Please log in or create an account to see your profile.</p>
+
+            <div class="tabs">
+                <button type="button" class="tab active" id="tabLogin">Log in</button>
+                <button type="button" class="tab" id="tabSignup">Create account</button>
+            </div>
+
+            <form id="loginForm" class="auth-form">
+                <label for="loginEmail">Email</label>
+                <input type="email" id="loginEmail" required>
+
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" required>
+
+                <button type="submit" class="primary">Log in</button>
+                <p class="message error" id="loginMessage" role="alert"></p>
+            </form>
+
+            <form id="signupForm" class="auth-form" hidden>
+                <label for="signupName">Full name</label>
+                <input type="text" id="signupName" required>
+
+                <label for="signupEmail">Email</label>
+                <input type="email" id="signupEmail" required>
+
+                <label for="signupPassword">Password (at least 6 characters)</label>
+                <input type="password" id="signupPassword" minlength="6" required>
+
+                <label for="signupConfirm">Confirm password</label>
+                <input type="password" id="signupConfirm" minlength="6" required>
+
+                <button type="submit" class="primary">Create account</button>
+                <p class="message error" id="signupMessage" role="alert"></p>
+            </form>
+        </div>
+
+        <!-- SHOWN WHEN LOGGED IN -->
+        <div id="profileBox" hidden>
+            <div class="profile-card">
+                <div class="avatar-box">
+                    <div class="avatar" id="avatar">?</div>
+                    <label for="photo" class="photo-btn">Change photo</label>
+                    <input type="file" id="photo" accept="image/*" hidden>
+                </div>
+
+                <form id="profileForm" class="profile-form">
+                    <label for="fullName">Full name</label>
+                    <input type="text" id="fullName" placeholder="Your name" required>
+
+                    <label for="email">Email</label>
+                    <input type="email" id="email" readonly>
+
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone" placeholder="Phone number">
+
+                    <label for="address">Address</label>
+                    <textarea id="address" rows="3" placeholder="Delivery address"></textarea>
+
+                    <button type="submit" class="primary">Save Profile</button>
+                    <p id="message" class="message" role="status"></p>
+                </form>
+            </div>
+
+            <button type="button" id="logoutBtn" class="logout">Log out</button>
+        </div>
+    </main>
+
+    <div class="footer">
+        <footer>
+            <div class="footer-links">
+                <h3>LINKS</h3>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+                <a href="profile.html">Profile</a>
+            </div>
+
+            <div class="footer-column">
+                <h3>POLICIES</h3>
+                <a href="#">Terms</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Shipping &amp; Delivery</a>
+                <a href="#">Returns &amp; Exchange</a>
+                <a href="#">Cancellation</a>
+            </div>
+
+            <div class="newsletter">
+                <h2>BE A PART OF ELEVN</h2>
+                <p>
+                    Subscribe to get early access to our drops
+                    and exclusive offers such as future
+                    archive sales only for subscribers.
+                </p>
+                <form class="email-form" action="#" method="post">
+                    <input type="email" name="email" placeholder="Enter your email" aria-label="Email address" required>
+                    <button type="submit" aria-label="Subscribe">→</button>
+                </form>
+            </div>
+
+            <a href="https://web.facebook.com/virak.ean.3" class="facebook" aria-label="Facebook"
+                target="_blank" rel="noopener">f</a>
+
+            <p class="copyright">&copy; 2024 Your Company. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="auth.js"></script>
+    <script>
+        const authBox = document.getElementById("authBox");
+        const profileBox = document.getElementById("profileBox");
+        const pageTitle = document.getElementById("pageTitle");
+
+        const tabLogin = document.getElementById("tabLogin");
+        const tabSignup = document.getElementById("tabSignup");
+        const loginForm = document.getElementById("loginForm");
+        const signupForm = document.getElementById("signupForm");
+
+        const avatar = document.getElementById("avatar");
+        const photoInput = document.getElementById("photo");
+        const profileForm = document.getElementById("profileForm");
+        const message = document.getElementById("message");
+
+        let user = null;
+        let photo = "";
+
+        function profileKey() {
+            return "elevn_profile_" + user.email;
+        }
+
+        function loadProfile() {
+            try {
+                return JSON.parse(localStorage.getItem(profileKey())) || {};
+            } catch (e) {
+                return {};
+            }
+        }
+
+        function showAvatar(name) {
+            if (photo) {
+                avatar.textContent = "";
+                avatar.style.backgroundImage = "url(" + photo + ")";
+            } else {
+                avatar.style.backgroundImage = "none";
+                avatar.textContent = name ? name.trim().charAt(0).toUpperCase() : "?";
+            }
+        }
+
+        function showMessage(text, isError) {
+            message.textContent = text;
+            message.className = "message" + (isError ? " error" : "");
+        }
+
+        // Decide what to show: login/create account, or the profile
+        function render() {
+            user = currentUser();
+
+            if (!user) {
+                authBox.hidden = false;
+                profileBox.hidden = true;
+                pageTitle.textContent = "Account";
+                return;
+            }
+
+            authBox.hidden = true;
+            profileBox.hidden = false;
+            pageTitle.textContent = "My Profile";
+
+            const saved = loadProfile();
+            document.getElementById("fullName").value = saved.name || user.name;
+            document.getElementById("email").value = user.email;
+            document.getElementById("phone").value = saved.phone || "";
+            document.getElementById("address").value = saved.address || "";
+            photo = saved.photo || "";
+            showAvatar(document.getElementById("fullName").value);
+            showMessage("", false);
+        }
+
+        // Tabs
+        function showTab(which) {
+            const isLogin = which === "login";
+            loginForm.hidden = !isLogin;
+            signupForm.hidden = isLogin;
+            tabLogin.classList.toggle("active", isLogin);
+            tabSignup.classList.toggle("active", !isLogin);
+        }
+        tabLogin.addEventListener("click", function () { showTab("login"); });
+        tabSignup.addEventListener("click", function () { showTab("signup"); });
+
+        // Log in
+        loginForm.addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const result = await logIn(
+                document.getElementById("loginEmail").value,
+                document.getElementById("loginPassword").value
+            );
+            if (!result.ok) {
+                document.getElementById("loginMessage").textContent = result.error;
+                return;
+            }
+            loginForm.reset();
+            document.getElementById("loginMessage").textContent = "";
+            render();
+        });
+
+        // Create account
+        signupForm.addEventListener("submit", async function (e) {
+            e.preventDefault();
+            const msg = document.getElementById("signupMessage");
+            const password = document.getElementById("signupPassword").value;
+
+            if (password !== document.getElementById("signupConfirm").value) {
+                msg.textContent = "Passwords do not match.";
+                return;
+            }
+
+            const result = await signUp(
+                document.getElementById("signupName").value,
+                document.getElementById("signupEmail").value,
+                password
+            );
+            if (!result.ok) {
+                msg.textContent = result.error;
+                return;
+            }
+            signupForm.reset();
+            msg.textContent = "";
+            render();
+        });
+
+        // Log out
+        document.getElementById("logoutBtn").addEventListener("click", function () {
+            logOut();
+            render();
+            showTab("login");
+        });
+
+        // Profile photo (cropped square and shrunk so it fits in storage)
+        photoInput.addEventListener("change", function () {
+            const file = photoInput.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function () {
+                const img = new Image();
+                img.onload = function () {
+                    const size = 300;
+                    const canvas = document.createElement("canvas");
+                    canvas.width = size;
+                    canvas.height = size;
+                    const side = Math.min(img.width, img.height);
+                    const sx = (img.width - side) / 2;
+                    const sy = (img.height - side) / 2;
+                    canvas.getContext("2d").drawImage(img, sx, sy, side, side, 0, 0, size, size);
+                    photo = canvas.toDataURL("image/jpeg", 0.85);
+                    showAvatar(document.getElementById("fullName").value);
+                };
+                img.src = reader.result;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        document.getElementById("fullName").addEventListener("input", function (e) {
+            if (!photo) showAvatar(e.target.value);
+        });
+
+        // Save profile
+        profileForm.addEventListener("submit", function (e) {
+            e.preventDefault();
+            const profile = {
+                name: document.getElementById("fullName").value.trim(),
+                phone: document.getElementById("phone").value.trim(),
+                address: document.getElementById("address").value.trim(),
+                photo: photo
+            };
+            try {
+                localStorage.setItem(profileKey(), JSON.stringify(profile));
+                showMessage("Profile saved.", false);
+            } catch (err) {
+                showMessage("Could not save. Try a smaller photo.", true);
+            }
+        });
+
+        render();
+    </script>
+</body>
+
+</html>

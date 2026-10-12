@@ -1,0 +1,158 @@
+/* Shop + Add Product pages (base, nav and footer come from index.css) */
+
+/* PAGE */
+.page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+}
+
+.page.narrow {
+    max-width: 640px;
+}
+
+.page h1 {
+    font-size: 2rem;
+    font-weight: 400;
+    letter-spacing: 0.08em;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.page h2 {
+    font-size: 1.3rem;
+    font-weight: 400;
+    margin: 56px 0 20px;
+}
+
+.empty {
+    text-align: center;
+    color: #666;
+}
+
+.empty a {
+    text-decoration: underline;
+}
+
+/* SHOP GRID */
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 28px;
+}
+
+.product-card {
+    background: #f7f7f7;
+    padding-bottom: 20px;
+}
+
+.product-card img {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    display: block;
+    margin-bottom: 14px;
+}
+
+.product-card h3 {
+    font-size: 1rem;
+    font-weight: 400;
+    padding: 0 16px;
+}
+
+.product-card .price {
+    padding: 6px 16px 0;
+    font-weight: bold;
+}
+
+.product-card .desc {
+    padding: 8px 16px 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #555;
+}
+
+/* ADD PRODUCT FORM */
+.product-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.product-form label {
+    font-size: 14px;
+    margin-top: 8px;
+}
+
+.product-form input,
+.product-form textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #111;
+    font: inherit;
+    background: #fff;
+}
+
+.preview {
+    width: 160px;
+    aspect-ratio: 4 / 5;
+    object-fit: cover;
+    margin-top: 8px;
+}
+
+.product-form button[type="submit"] {
+    margin-top: 20px;
+    padding: 12px;
+    border: 1px solid #111;
+    background: #111;
+    color: #fff;
+    font: inherit;
+    cursor: pointer;
+}
+
+.product-form button[type="submit"]:hover {
+    background: #fff;
+    color: #111;
+}
+
+.message {
+    font-size: 14px;
+    color: #1a7f37;
+    min-height: 1.2em;
+}
+
+.message.error {
+    color: #c62828;
+}
+
+/* PRODUCT LIST (delete) */
+.product-row {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.product-row img {
+    width: 48px;
+    height: 60px;
+    object-fit: cover;
+}
+
+.product-row span {
+    flex: 1;
+}
+
+.delete {
+    padding: 6px 12px;
+    border: 1px solid #c62828;
+    background: #fff;
+    color: #c62828;
+    cursor: pointer;
+}
+
+.delete:hover {
+    background: #c62828;
+    color: #fff;
+}
